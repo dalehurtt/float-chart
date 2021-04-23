@@ -1,0 +1,11 @@
+Set vol to 0
+Set high to 0
+Set low to 0
+
+Get Nth stock values
+	end date == null ? set end date to sv.Date
+	add sv.Vol to vol
+	high < sv.High ? high = sv.High
+	low == 0 || low > sv.Low ? low = sv.Low
+	vol >= float
+		? set start date to sv.Date

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "float-chart": {
+      "commandName": "Project",
+      "commandLineArgs": "C:\\Users\\dalehu\\Documents\\Stocks\\T.csv"
+    }
+  }
+}
