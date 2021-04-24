@@ -6,10 +6,6 @@
     <RootNamespace>Charts</RootNamespace>
   </PropertyGroup>
 
-  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
-    <Exec Command="TIME /T" />
-  </Target>
-
   <ItemGroup>
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="5.0.0" />
   </ItemGroup>
