@@ -11,13 +11,21 @@ namespace Charts {
         private static string outputFile;
         private static string dirPath;
 
+        private static string currentTicker = string.Empty;
+
         public static void Main () {
             try {
                 var appSettings = ConfigurationManager.AppSettings;
-                dirPath = appSettings ["dirpath"];
+                if (System.Environment.OSVersion.Platform == PlatformID.Unix) {
+                    dirPath = appSettings ["dirpathmac"];
+                }
+                else {
+                    dirPath = appSettings ["dirpath"];
+                }
                 string tickersValue = appSettings ["tickers"];
                 tickers = tickersValue.Split (',');
                 foreach (string ticker in tickers) {
+                    currentTicker = ticker;
                     inputFile = $"{dirPath}{ticker}.csv";
                     outputFile = $"{dirPath}{ticker}-float.csv";
 
@@ -30,7 +38,7 @@ namespace Charts {
                 }
             }
             catch (Exception ex) {
-                Utils.WriteToConsole (Utils.ExToString (ex), true, "Main");
+                Utils.WriteToConsole ($"{Utils.ExToString (ex)} {currentTicker}", true, "Main");
             }
         }
 
@@ -44,7 +52,7 @@ namespace Charts {
                 }
             }
             catch (Exception ex) {
-                Utils.WriteToConsole (Utils.ExToString (ex), true, "CalculateAllFloats");
+                Utils.WriteToConsole ($"{Utils.ExToString (ex)} { currentTicker}", true, "CalculateAllFloats");
             }
             return floats;
         }
@@ -88,7 +96,7 @@ namespace Charts {
                 }
             }
             catch (Exception ex) {
-                Utils.WriteToConsole (Utils.ExToString (ex), true, "CalculateFloat");
+                Utils.WriteToConsole ($"{Utils.ExToString (ex)} { currentTicker}", true, "CalculateFloat");
             }
             return fv;
         }
@@ -110,7 +118,7 @@ namespace Charts {
                 else throw new Exception ($"{filePath} does not exist.");
             }
             catch (Exception ex) {
-                Utils.WriteToConsole (Utils.ExToString (ex), true, "GetPathInfo");
+                Utils.WriteToConsole ($"{Utils.ExToString (ex)} { currentTicker}", true, "GetPathInfo");
                 return null;
             }
         }
@@ -124,7 +132,7 @@ namespace Charts {
                 }
             }
             catch (Exception ex) {
-                Utils.WriteToConsole (Utils.ExToString (ex), true, "OutputFloatValuesAsCsv");
+                Utils.WriteToConsole ($"{Utils.ExToString (ex)} { currentTicker}", true, "OutputFloatValuesAsCsv");
             }
             return values;
         }
@@ -138,7 +146,7 @@ namespace Charts {
                     .ToList ();
             }
             catch (Exception ex) {
-                Utils.WriteToConsole (Utils.ExToString (ex), true, "ReadStockFile");
+                Utils.WriteToConsole ($"{Utils.ExToString (ex)} { currentTicker}", true, "ReadStockFile");
             }
             return values;
         }
